@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: 0;
-  font-family: gilroy;
+@layer components {
+  .btn-primary {
+    @apply w-full rounded-full bg-emerald-500 px-4 py-2
+      text-base font-semibold text-slate-950
+      transition-all duration-300
+      hover:bg-emerald-400
+      hover:shadow-lg hover:shadow-emerald-500/20
+      active:scale-[0.98];
+  }
 }
 
-html,
-body{
-  height: 100%;
-  width: 100%;
+@layer components {
+  .input-primary{
+   @apply  w-full rounded-full border border-slate-700 bg-slate-800 px-4 py-2 text-base text-white placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10
+  }
 }
 
 body{
