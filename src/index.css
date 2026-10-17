@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  font-family: gilroy;
+}
+
+html,
+body{
+  height: 100%;
+  width: 100%;
+}
+
+body{
+  background-color: #111;
+  color: #fff;
+}
