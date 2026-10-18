@@ -17,6 +17,10 @@
   }
 }
 
+#task::-webkit-scrollbar{
+  display: none;
+}
+
 body{
   background-color: #111;
   color: #fff;
