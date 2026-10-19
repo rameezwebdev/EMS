@@ -4,7 +4,7 @@ import Header from '../EDBLayout/Header'
 
 const AdminDashboard = () => {
   return (
-    <div className='p-10 h-screen'>
+    <div className='px-6 py-6 h-screen'>
      <Header />
      <CreateTask />
      <AllTasks />
