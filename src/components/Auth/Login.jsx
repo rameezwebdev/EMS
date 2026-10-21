@@ -1,24 +1,31 @@
 import { useState } from "react";
 
-const Login = () => {
+const Login = ({handLogin}) => {
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    useremail: "",
+    password: "",
+  });
 
-  const {userName, password} = user;
+  const {useremail, password} = user;
 
-  const handleSubmit = (e) => {
-     e.preventDefault();
-     console.log('email',user.userName)
-     console.log('pass',user.password)
+ const handleSubmit = async (e) => {
+    e.preventDefault();
 
-     setUser(() => (
-       {
-      userName: "",
-      password: "",
+    const success = await handLogin(useremail, password);
+   
+    if (success) {
+      setUser({
+        useremail: "",
+        password: "",
+      });
+    } else {
+      setUser((prev) => ({
+        ...prev,
+        useremail: "",
+        password: "",
+      }));
     }
-     )
-    );
-
   };
 
   return (
@@ -35,9 +42,9 @@ const Login = () => {
       <input
         className="input-primary"
         type="email"
-        value={userName}
+        value={useremail}
         onChange={(e) => setUser((pre) => ({
-          ...pre, userName: e.target.value
+          ...pre, useremail: e.target.value
         }))}
         placeholder="Enter your email"
         required
