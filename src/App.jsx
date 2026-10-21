@@ -12,20 +12,24 @@ const App = () => {
   const Localdata = useContext(AuthContext);
   console.log(Localdata)
  
-//   useEffect(() => {
+  useEffect(() => {
 
-//   setUser(Localdata);
+  if(Localdata) {
+        const loggedInUser = localStorage.getItem('loggedInUser')
+  }
 
-// }, [Localdata]);
+}, [Localdata]);
  
   const handLogin = (useremail, password) => {
 
     if(Localdata && Localdata.admin.find((e) => e.email == useremail && e.password == password )){
        setUser('admin');
+       localStorage.setItem('loggedInUser', JSON.stringify({role:'admin'}));
 
     }else if(Localdata && Localdata.employees.find((e) => e.email == useremail && e.password == password )) {
         setUser('user');
-        
+        localStorage.setItem('loggedInUser', JSON.stringify({role:'user'}));
+
     }else{
       alert('Invalid')
     }
