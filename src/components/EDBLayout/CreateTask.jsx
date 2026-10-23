@@ -11,7 +11,7 @@ const CreateTask = () => {
       Create Task
     </h1>
 
-    <form className="grid grid-cols-1 gap-28 px-6 pb-6 sm:px-8 lg:grid-cols-2">
+    <form className="grid grid-cols-1 gap-28 md:gap-6 px-6 pb-6 sm:px-8 lg:grid-cols-2">
 
       {/* Left Side */}
       <div className="flex flex-col gap-2">

@@ -7,33 +7,63 @@ import { AuthContext } from "./context/AuthProvider"
 
 const App = () => {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
+  
+  const [userData, setUserData] = useState(null);
+  
   const Localdata = useContext(AuthContext);
-  console.log(Localdata)
- 
+  
   useEffect(() => {
 
   if(Localdata) {
-        const loggedInUser = localStorage.getItem('loggedInUser')
+    
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      setUser(loggedInUser.role)
+    }
   }
 
 }, [Localdata]);
+
  
   const handLogin = (useremail, password) => {
+  if (
+    Localdata &&
+    Localdata.admin.find(
+      (e) => e.email === useremail && e.password === password
+    )
+  ) {
+    setUser("admin");
 
-    if(Localdata && Localdata.admin.find((e) => e.email == useremail && e.password == password )){
-       setUser('admin');
-       localStorage.setItem('loggedInUser', JSON.stringify({role:'admin'}));
+    localStorage.setItem(
+      "loggedInUser",
+      JSON.stringify({ role: "admin" })
+    );
 
-    }else if(Localdata && Localdata.employees.find((e) => e.email == useremail && e.password == password )) {
-        setUser('user');
-        localStorage.setItem('loggedInUser', JSON.stringify({role:'user'}));
+  } else if (Localdata && Localdata.employees) {
+    const employee = Localdata.employees.find(
+      (e) => e.email === useremail && e.password === password
+    );
 
-    }else{
-      alert('Invalid')
+    if (employee) {
+      setUser("user");
+      setUserData(employee);
+
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify({
+          role: "user",
+          employeeId: employee.id
+        })
+      );
+    } else {
+      alert("Invalid");
     }
+  } else {
+    alert("Employee data not available");
   }
+};
 
   
 
@@ -45,7 +75,7 @@ const App = () => {
     ) : user === "admin" ? (
       <AdminDashboard />
     ) : (
-      <EmployeeDashboard />
+      <EmployeeDashboard  userData = {userData}/>
     )}
   </>
   )

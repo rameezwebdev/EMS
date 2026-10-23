@@ -2,10 +2,11 @@ import AllTasks from '../EDBLayout/AllTasks';
 import CreateTask from '../EDBLayout/CreateTask';
 import Header from '../EDBLayout/Header'
 
-const AdminDashboard = () => {
+const AdminDashboard = ({user}) => {
+  console.log(user)
   return (
     <div className='px-6 py-6 h-screen'>
-     <Header />
+     <Header user={user}/>
      <CreateTask />
      <AllTasks />
 </div>

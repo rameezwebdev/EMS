@@ -2,7 +2,7 @@
 
 @layer components {
   .btn-primary {
-    @apply w-full rounded-full bg-emerald-500 px-4 py-2
+    @apply w-full rounded-md bg-emerald-500 px-4 py-2
       text-base font-semibold text-slate-950
       transition-all duration-300
       hover:bg-emerald-400
@@ -13,7 +13,7 @@
 
 @layer components {
   .input-primary{
-   @apply  w-full rounded-full border border-slate-700 bg-slate-800 px-4 py-2 text-base text-white placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10
+   @apply  w-full rounded-md border border-slate-700 bg-slate-800 px-4 py-2 text-base text-white placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10
   }
 }
 
