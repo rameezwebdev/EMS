@@ -3,7 +3,7 @@ const ActiveTask = ({userData}) => {
   return (
     
    <div className="h-full min-w-75 bg-green-400 rounded-xl">
-    <h2 className="text-2xl text-center pt-2 font-bold">
+    <h2 className="text-2xl text-center pt-6 font-bold">
         Active Task
     </h2>
       {userData.tasks

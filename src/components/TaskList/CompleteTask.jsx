@@ -4,7 +4,7 @@ const CompleteTask = ({userData}) => {
   return (
      <div className="h-full min-w-75 bg-yellow-400 rounded-xl">
 
-      <h2 className="text-2xl text-center pt-2 font-bold">
+      <h2 className="text-2xl text-center pt-6 font-bold">
         Complete Task
     </h2>
 

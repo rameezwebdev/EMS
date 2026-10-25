@@ -4,7 +4,7 @@ const FailedTask = ({userData}) => {
   return (
     <div className="h-full min-w-75 bg-red-400 rounded-xl">
 
-       <h2 className="text-2xl text-center pt-2 font-bold">
+       <h2 className="text-2xl text-center pt-6 font-bold">
             Failed Task
        </h2>
 
