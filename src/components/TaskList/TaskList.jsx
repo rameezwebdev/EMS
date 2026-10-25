@@ -1,41 +1,15 @@
-const TaskList = () => {
+import ActiveTask from "./ActiveTask"
+import CompleteTask from "./CompleteTask"
+import NewTask from "./NewTask"
+
+const TaskList = ({userData}) => {
   return (
-    <div id="task" className=" h-[45%] lg:h-[55%] lg:mt-20 w-full  mt-10 flex flex-nowrap gap-8 overflow-x-auto items-center justify-start">
-        <div className="h-full min-w-75 bg-emerald-400 rounded-xl ">
-            <div className="flex justify-between items-center p-5">
-                <h3 className="bg-red-400 px-3 py-1 rounded-xl">High</h3>
-                <h4 className="px-3 py-1 text-sm">Oct 2026</h4>
-            </div>
-            <h2 className="mt-5 px-5 text-2xl font-semibold">Make a YouTube Video</h2>
-            <p className="text-sm px-5 py-2 text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem vero maxime voluptates, similique ratione nihil!</p>
-        </div>
+    <div className="h-[50%] lg:mt-20 min-w-full  mt-10 grid lg:grid-cols-4 gap-12 md:grid-cols-2">
        
-        <div className="h-full min-w-75 bg-blue-400 rounded-xl ">
-            <div className="flex justify-between items-center p-5">
-                <h3 className="bg-red-400 px-3 py-1 rounded-xl">High</h3>
-                <h4 className="px-3 py-1 text-sm">Oct 2026</h4>
-            </div>
-            <h2 className="mt-5 px-5 text-2xl font-semibold">Make a YouTube Video</h2>
-            <p className="text-sm px-5 py-2 text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem vero maxime voluptates, similique ratione nihil!</p>
-        </div>
+       <ActiveTask userData = {userData}/>
+       <NewTask userData = {userData}/>
+       <CompleteTask userData = {userData}/>
 
-        <div className="h-full min-w-75 bg-red-400 rounded-xl ">
-            <div className="flex justify-between items-center p-5">
-                <h3 className="bg-red-400 px-3 py-1 rounded-xl">High</h3>
-                <h4 className="px-3 py-1 text-sm">Oct 2026</h4>
-            </div>
-            <h2 className="mt-5 px-5 text-2xl font-semibold">Make a YouTube Video</h2>
-            <p className="text-sm px-5 py-2 text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem vero maxime voluptates, similique ratione nihil!</p>
-        </div>
-
-        <div className="h-full min-w-75 bg-yellow-400 rounded-xl ">
-            <div className="flex justify-between items-center p-5">
-                <h3 className="bg-red-400 px-3 py-1 rounded-xl">High</h3>
-                <h4 className="px-3 py-1 text-sm">Oct 2026</h4>
-            </div>
-            <h2 className="mt-5 px-5 text-2xl font-semibold">Make a YouTube Video</h2>
-            <p className="text-sm px-5 py-2 text-start">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem vero maxime voluptates, similique ratione nihil!</p>
-        </div>
     </div>
   )
 }
