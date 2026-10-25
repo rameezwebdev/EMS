@@ -2,7 +2,7 @@ const NewTask = ({ userData }) => {
     console.log(userData);
     
   return (
-    <div className="h-full min-w-75 bg-yellow-400 rounded-xl">
+    <div className="h-full min-w-75 bg-blue-400 rounded-xl">
 
        <h2 className="text-2xl text-center pt-2 font-bold">
             New Task
