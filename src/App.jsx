@@ -16,6 +16,7 @@ const App = () => {
   const [authChecked, setAuthChecked] = useState(false);
   
   const Localdata = useContext(AuthContext);
+  console.log(Localdata);
   
  useEffect(() => {
 
@@ -113,7 +114,7 @@ const handleLogOut = () => {
         ) : !user ? (
             <Login handLogin={handLogin} />
         ) : user === "admin" ? (
-            <AdminDashboard />
+            <AdminDashboard handleLogout = {handleLogOut}/>
         ) : (
             <EmployeeDashboard
                 userData={userData}
