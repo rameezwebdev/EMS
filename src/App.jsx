@@ -7,76 +7,119 @@ import { AuthContext } from "./context/AuthProvider"
 
 const App = () => {
 
+  // useState for storing role of user
   const [user, setUser] = useState();
 
-  
+  // useState for storing login user data
   const [userData, setUserData] = useState(null);
+
+  const [authChecked, setAuthChecked] = useState(false);
   
   const Localdata = useContext(AuthContext);
   
-  useEffect(() => {
+ useEffect(() => {
 
-  if(Localdata) {
+    // setLocalStorage()
     
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-      setUser(loggedInUser.role)
+    if (!Localdata) return;
+
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (storedUser) {
+        try {
+            const loggedInUser = JSON.parse(storedUser);
+
+            if (loggedInUser.role === "admin") {
+                setUser("admin");
+            } 
+            else if (loggedInUser.role === "user") {
+                const employee = Localdata.employees?.find(
+                    (e) => e.id === loggedInUser.employeeId
+                );
+
+                if (employee) {
+                    setUser("user");
+                    setUserData(employee);
+                } else {
+                    localStorage.removeItem("loggedInUser");
+                }
+            }
+        } catch (error) {
+            localStorage.removeItem("loggedInUser");
+        }
     }
-  }
+
+    setAuthChecked(true);
 
 }, [Localdata]);
 
  
-  const handLogin = (useremail, password) => {
-  if (
-    Localdata &&
-    Localdata.admin.find(
-      (e) => e.email === useremail && e.password === password
-    )
-  ) {
-    setUser("admin");
+  // Login Function
+ const handLogin = (useremail, password) => {
 
-    localStorage.setItem(
-      "loggedInUser",
-      JSON.stringify({ role: "admin" })
+    if (!Localdata || !Localdata.admin || !Localdata.employees) {
+        console.log("Data is not loaded yet");
+        return;
+    }
+
+    const admin = Localdata.admin.find(
+        (e) => e.email === useremail && e.password === password
     );
 
-  } else if (Localdata && Localdata.employees) {
+    if (admin) {
+        setUser("admin");
+
+        localStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({ role: "admin" })
+        );
+
+        return;
+    }
+
     const employee = Localdata.employees.find(
-      (e) => e.email === useremail && e.password === password
+        (e) => e.email === useremail && e.password === password
     );
 
     if (employee) {
-      setUser("user");
-      setUserData(employee);
+        setUser("user");
+        setUserData(employee);
 
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({
-          role: "user",
-          employeeId: employee.id
-        })
-      );
+        localStorage.setItem(
+            "loggedInUser",
+            JSON.stringify({
+                role: "user",
+                employeeId: employee.id
+            })
+        );
+
     } else {
-      alert("Invalid");
+        alert("Invalid email or password");
     }
-  } else {
-    alert("Employee data not available");
-  }
 };
 
-  
+// Longout Function
+const handleLogOut = () => {
+    localStorage.removeItem("loggedInUser");
+    setUserData(null);
+    setUser(null);
+}  
 
   
   return (
    <>
-    {!user ? (
-      <Login handLogin={handLogin} />
-    ) : user === "admin" ? (
-      <AdminDashboard />
-    ) : (
-      <EmployeeDashboard  userData = {userData}/>
-    )}
+    {!authChecked ? (
+            <div>Loading...</div>
+        ) : !user ? (
+            <Login handLogin={handLogin} />
+        ) : user === "admin" ? (
+            <AdminDashboard />
+        ) : (
+            <EmployeeDashboard
+                userData={userData}
+                handleLogout={handleLogOut}
+            />
+        )}
   </>
   )
 }

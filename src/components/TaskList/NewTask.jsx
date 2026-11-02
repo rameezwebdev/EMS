@@ -1,5 +1,4 @@
 const NewTask = ({ userData }) => {
-    console.log(userData);
     
   return (
     <div className="h-full min-w-75 bg-blue-400 rounded-xl">
