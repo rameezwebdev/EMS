@@ -1,8 +1,28 @@
+import { useState } from "react"
 import { FaRegArrowAltCircleLeft } from "react-icons/fa"
 
 const CreateTask = () => {
+
+  const [taskData, setTaskData] = useState({
+    taskTitle:"",
+    taskDate:"",
+    taskAssign:"",
+    taskCategory:"",
+    taskDescription:""
+  })
+   
+   const {taskTitle, taskDate, taskAssign, taskCategory, taskDescription} = taskData;
+
+   const handleSubmit = (e) => {
+      e.preventDefault()
+
+     console.log(taskData);
+
+
+   }
+
   return (
-    <div className="flex justify-center  py-4">
+  <div className="flex justify-center  py-4">
   <div className="mt-4 w-full max-w-full rounded-2xl bg-gray-800 text-white">
 
   
@@ -11,7 +31,7 @@ const CreateTask = () => {
       Create Task
     </h1>
 
-    <form className="grid grid-cols-1 gap-28 md:gap-6 px-6 pb-6 sm:px-8 lg:grid-cols-2">
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-28 md:gap-6 px-6 pb-6 sm:px-8 lg:grid-cols-2">
 
       {/* Left Side */}
       <div className="flex flex-col gap-2">
@@ -22,6 +42,8 @@ const CreateTask = () => {
         <input
           id="title"
           type="text"
+          value={taskTitle}
+          onChange={(e) => setTaskData({...taskData, taskTitle: e.target.value})}
           placeholder="Make a UI Design"
           className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
         />
@@ -32,6 +54,8 @@ const CreateTask = () => {
         <input
           id="date"
           type="date"
+          value={taskDate}
+          onChange={(e) => setTaskData({...taskData, taskDate: e.target.value})}
           className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
         />
 
@@ -41,6 +65,8 @@ const CreateTask = () => {
         <input
           id="assignee"
           type="text"
+          value={taskAssign}
+          onChange={(e) => setTaskData({...taskData, taskAssign: e.target.value})}
           placeholder="Enter name"
           className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
         />
@@ -51,6 +77,8 @@ const CreateTask = () => {
         <input
           id="category"
           type="text"
+          value={taskCategory}
+         onChange={(e) => setTaskData({...taskData, taskCategory: e.target.value})}
           placeholder="Design, Development etc..."
           className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
         />
@@ -65,6 +93,8 @@ const CreateTask = () => {
         </label>
         <textarea
           id="description"
+          value={taskDescription}
+         onChange={(e) => setTaskData({...taskData, taskDescription: e.target.value})}
           rows={8}
           placeholder="Detailed description of Task"
           className="my-1 min-h-48 w-full resize-y rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500 "
