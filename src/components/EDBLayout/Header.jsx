@@ -1,5 +1,4 @@
 const Header = ({userData, handleLogout }) => {
-  console.log(userData)
   
   return (
     <div className="flex items-end justify-between ">

@@ -254,3 +254,7 @@
    const admin = JSON.parse(localStorage.getItem('admin'));
    return {admin, employees}
  };  
+
+ export const saveEmployees = (employees) => {
+  localStorage.setItem("employees", JSON.stringify(employees));
+};

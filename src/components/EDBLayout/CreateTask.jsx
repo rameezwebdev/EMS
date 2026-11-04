@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { FaRegArrowAltCircleLeft } from "react-icons/fa"
 
-const CreateTask = () => {
-
+const CreateTask = ({empData, handleCreateTask}) => {
   const [taskData, setTaskData] = useState({
     taskTitle:"",
     taskDate:"",
@@ -13,13 +12,35 @@ const CreateTask = () => {
    
    const {taskTitle, taskDate, taskAssign, taskCategory, taskDescription} = taskData;
 
-   const handleSubmit = (e) => {
-      e.preventDefault()
+   
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-     console.log(taskData);
+  const employeeId = Number(taskAssign);
 
+  const newTask = {
+    title: taskTitle,
+    date: taskDate,
+    category: taskCategory,
+    description: taskDescription,
 
-   }
+    active: false,
+    newTask: true,
+    completed: false,
+    failed: false,
+  };
+
+  handleCreateTask(newTask, employeeId);
+
+  setTaskData({
+    taskTitle: "",
+    taskDate: "",
+    taskAssign: "",
+    taskCategory: "",
+    taskDescription: "",
+  });
+};
+
 
   return (
   <div className="flex justify-center  py-4">
@@ -59,17 +80,34 @@ const CreateTask = () => {
           className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
         />
 
-        <label htmlFor="assignee" className="mt-3 text-lg">
-          Assign To
-        </label>
-        <input
-          id="assignee"
-          type="text"
-          value={taskAssign}
-          onChange={(e) => setTaskData({...taskData, taskAssign: e.target.value})}
-          placeholder="Enter name"
-          className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
-        />
+        
+<label htmlFor="assignee" className="mt-3 text-lg">
+  Assign To
+</label>
+
+<select
+  id="assignee"
+  value={taskAssign}
+  onChange={(e) =>
+    setTaskData({
+      ...taskData,
+      taskAssign: e.target.value,
+    })
+  }
+  required
+  className="my-1 w-full rounded-md bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-500"
+>
+  <option value="" disabled>
+    Select Employee
+  </option>
+
+  {empData.map((emp) => (
+    <option key={emp.id} value={emp.id}>
+      {emp.name}
+    </option>
+  ))}
+</select>
+
 
         <label htmlFor="category" className="mt-3 text-lg">
           Category

@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import Login from "./components/Auth/Login"
 import AdminDashboard from "./components/Dashboard/AdminDashboard"
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard"
-import { getLocalData, setLocalStorage } from "./utils/localStorage"
+// import { setLocalStorage } from "./utils/localStorage"
 import { AuthContext } from "./context/AuthProvider"
+import { saveEmployees, setLocalStorage } from "./utils/localStorage"
 
 const App = () => {
 
@@ -14,15 +15,22 @@ const App = () => {
   const [userData, setUserData] = useState(null);
 
   const [authChecked, setAuthChecked] = useState(false);
+
+//   useState to store employess data
+  const [empData, setEmpData] = useState();
   
   const Localdata = useContext(AuthContext);
-  console.log(Localdata);
+  
   
  useEffect(() => {
 
-    // setLocalStorage()
-    
+    setLocalStorage();
+  
     if (!Localdata) return;
+
+   const employData = Localdata.employees;
+   setEmpData(employData);
+    
 
     const storedUser = localStorage.getItem("loggedInUser");
 
@@ -54,6 +62,13 @@ const App = () => {
 
 }, [Localdata]);
 
+
+   useEffect(() => {
+  if (Array.isArray(empData)) {
+    saveEmployees(empData);
+  }
+}, [empData]);
+
  
   // Login Function
  const handLogin = (useremail, password) => {
@@ -78,9 +93,10 @@ const App = () => {
         return;
     }
 
-    const employee = Localdata.employees.find(
-        (e) => e.email === useremail && e.password === password
-    );
+    const employee = empData?.find((e) =>
+       e.email === useremail &&
+       e.password === password
+);
 
     if (employee) {
         setUser("user");
@@ -99,6 +115,33 @@ const App = () => {
     }
 };
 
+//  AssignTask
+const handleCreateTask = (newTask, employeeId) => {
+  setEmpData((prevEmployees) =>
+    prevEmployees.map((employee) => {
+      if (employee.id === employeeId) {
+        return {
+          ...employee,
+
+          tasks: [
+            ...(employee.tasks || []),
+            newTask,
+          ],
+
+          taskCount: {
+            ...employee.taskCount,
+            newTask:
+              (employee.taskCount?.newTask || 0) + 1,
+          },
+        };
+      }
+
+      return employee;
+    })
+  );
+};
+
+
 // Longout Function
 const handleLogOut = () => {
     localStorage.removeItem("loggedInUser");
@@ -114,7 +157,7 @@ const handleLogOut = () => {
         ) : !user ? (
             <Login handLogin={handLogin} />
         ) : user === "admin" ? (
-            <AdminDashboard handleLogout = {handleLogOut}/>
+            <AdminDashboard empData = {empData}   handleCreateTask={handleCreateTask} handleLogout = {handleLogOut}/>
         ) : (
             <EmployeeDashboard
                 userData={userData}

@@ -7,12 +7,14 @@ export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
 
   const [localData, setLocalData] = useState();
+
   
  useEffect(() => {
 
    const data = getLocalData();
-  
+   
    setLocalData(data);
+   
    
  },[])
  
